@@ -1,0 +1,111 @@
+********************************************
+*                                          *
+*              CONTROLES:                  *
+*                                          *
+********************************************
+
+
+	Q Salir
+	CLICK DER + MOVIMIENTO									Mover Cámara
+	CLICK IZQ													Seleccionar Triángulo 
+																									(en modo SELECTION)
+
+************ MODOS DE DIBUJADO *************
+	1 PUNTOS
+	2 LINEA
+	3 SOLIDO
+	4 AJEDREZ
+	5 SELECCION POR COLOR
+
+***************** OBJETOS: *****************
+	
+	6 CUBO
+	7	PIRAMIDE
+	8	BEETHOVEN - OBJETO PLY
+	9	PEÓN - OBJETO POR ROTACIÓN
+	0	PILAF - MODELO JERÁRQUICO
+
+
+********************************************
+**                                        **
+**											CONTROLES PILAF              **
+**                                        **
+********************************************
+
+**************** ANIMACION: ****************
+
+	P CORRER
+
+************** TREN SUPERIOR: **************
+
+-GIRAR TREN SUPERIOR EN EJE Y
+	F1 SENTIDO NEGATIVO
+	F2 SENTIDO POSITIVO
+
+
+************** BRAZOS: *********************
+
+-GIRAR BRAZO DERECHO EN EJE X
+	R SENTIDO POSITIVO
+	W SENTIDO NEGATIVO
+
+-GIRAR BRAZO DERECHO EN EJE Y
+	F SENTIDO POSITIVO
+	S SENTIDO NEGATIVO
+
+-GIRAR BRAZO DERECHO EN EJE Z
+	D SENTIDO POSITIVO
+	E SENTIDO NEGATIVO
+
+
+-GIRAR BRAZO IZQUIERDO EN EJE X
+	O SENTIDO NEGATIVO
+	U SENTIDO POSITIVO
+
+-GIRAR BRAZO IZQUIERDO EN EJE Y
+	J SENTIDO NEGATIVO
+	K SENTIDO POSITIVO
+
+-GIRAR BRAZO IZQUIERDO EN EJE Z
+	L SENTIDO NEGATIVO
+	I SENTIDO POSITIVO
+
+
+************** MANOS: ********************
+
+-GIRAR MANO DERECHA EN EJE Z
+	F5 SENTIDO POSITIVO
+	F6 SENTIDO NEGATIVO
+
+-GIRAR MANO DERECHA EN EJE (X,Y)
+	F7 SENTIDO POSITIVO
+	F8 SENTIDO NEGATIVO
+
+-GIRAR MANO IZQUIERDA EN EJE Z
+	F9 SENTIDO NEGATIVO
+	F10 SENTIDO POSITIVO
+
+-GIRAR MANO IZQUIERDA EN EJE (-X,Y)
+	F11 SENTIDO NEGATIVO
+	F12 SENTIDO POSITIVO
+
+
+************** PIERNAS/PIE: **************
+
+-GIRAR PIE DERECHO EN EJE X
+	Z SENTIDO POSITIVO
+	X SENTIDO NEGATIVO
+
+-GIRAR PIE IZQUIERDO EN EJE X
+	C SENTIDO POSITIVO
+	V SENTIDO NEGATIVO
+
+-GIRAR PIERNA DERECHA EN EJE X
+	B (SENTIDO POSITIVO
+	N (SENTIDO NEGATIVO
+
+-GIRAR PIERNA IZQUIERDA EN EJE X
+	M SENTIDO POSITIVO
+	, SENTIDO NEGATIVO
+
+

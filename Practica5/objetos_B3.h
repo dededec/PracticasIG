@@ -1,0 +1,221 @@
+//**************************************************************************
+// Práctica 1 usando objetos
+//**************************************************************************
+
+#include <vector>
+#include <GL/gl.h>
+#include "vertex.h"
+#include <stdlib.h>
+#include "file_ply_stl.hpp"
+#include "./SeleccionColor/user_code.h"
+
+using namespace std;
+
+const float AXIS_SIZE=5000;
+typedef enum{POINTS,EDGES,SOLID_CHESS,SOLID, SELECTION} _modo;
+
+//*************************************************************************
+// clase punto
+//*************************************************************************
+
+class _puntos3D
+{
+public:
+
+  
+	_puntos3D();
+void 	draw_puntos(float r, float g, float b, int grosor);
+
+vector<_vertex3f> vertices;
+};
+
+
+//*************************************************************************
+// clase triángulo
+//*************************************************************************
+
+class _triangulos3D: public _puntos3D
+{
+public:
+
+	_triangulos3D();
+void 	draw_aristas(float r, float g, float b, int grosor);
+void    draw_solido(float r, float g, float b);
+void 	draw_solido_ajedrez(float r1, float g1, float b1, float r2, float g2, float b2);
+void   draw_selection(vector<_vertex3i> carasArg, int inicio); //La idea del ID mal porque no podemos recuperar la posición desde el color entonces.
+//¿Pasar el vector como parámetro y si tiene tamaño mayor a 1 lo usamos y si no usamos el del objeto desde el que se llama?
+//PROBLEMAS: Tenemos que localizar la parte que pertenezca al objeto en cuestión.
+//POSIBLE SOLUCIÓN: Como vamos a tener dos modos de hacer el draw selection, una si tenemos un vector con argumento y otra si no,
+//podemos tener un argumento que diga la posición donde empezar en el vector pasado como argumento.
+void   draw_selection(); //Llamará a la función de antes pero con un vector vacío
+void 	draw(_modo modo, float r1, float g1, float b1, float r2, float g2, float b2, float grosor, vector<_vertex3i> carasArg, int inicio);
+void draw(_modo modo, float r1, float g1, float b1, float r2, float g2, float b2, float grosor); //Llamará al otro draw pero con un vector vacío
+
+vector<_vertex3i> caras;
+vector<bool> seleccionado;
+};
+
+
+//*************************************************************************
+// clase cubo
+//*************************************************************************
+
+class _cubo: public _triangulos3D
+{
+public:
+
+	_cubo(float tam=0.5);
+};
+
+
+//*************************************************************************
+// clase piramide
+//*************************************************************************
+
+class _piramide: public _triangulos3D
+{
+public:
+
+	_piramide(float tam=0.5, float al=0.75);
+};
+
+//*************************************************************************
+// clase objeto ply
+//*************************************************************************
+
+class _objeto_ply: public _triangulos3D
+{
+public:
+   _objeto_ply();
+
+int   parametros(char *archivo);
+};
+
+//************************************************************************
+// objeto por revolución
+//************************************************************************
+
+class _rotacion: public _triangulos3D
+{
+public:
+       _rotacion();
+void  parametros(vector<_vertex3f> perfil1, int num1, int tapas);
+
+vector<_vertex3f> perfil; 
+int num;
+};
+
+//************************************************************************
+// clase esfera
+//************************************************************************
+
+class _esfera: public _rotacion
+{
+public:
+	_esfera(float radio = 1.0, int n = 15, int num = 17);
+};
+
+//************************************************************************
+// clase semiesfera
+//************************************************************************
+
+class _semiEsfera: public _rotacion
+{
+       public:
+       _semiEsfera(float radio = 1.0, int n = 15, int num = 17);
+};
+
+//************************************************************************
+// clase cilindro
+//************************************************************************
+
+class _cilindro: public _rotacion
+{
+       public:
+       _cilindro(float alt = 2.0, float anch = 1.0, int num=17);
+};
+
+
+//************************************************************************
+// clase cono truncado
+//************************************************************************
+
+class _conoT: public _rotacion
+{
+       public:
+       _conoT(float alt = 3.0, float anchInf= 1.0, float anchSup = 1.5, int  num = 17);
+};
+
+//************************************************************************
+// clase tetraedro
+//************************************************************************
+
+class _tetraedro: public _triangulos3D
+{
+       public:
+       _tetraedro(float lado=1.0);
+};
+
+//************************************************************************
+// objecto articulado: Robot Pilaf
+//************************************************************************
+class _central: public _triangulos3D
+{
+       public:
+       _esfera esfera1,esfera2,esfera3,esfera4,esfera5;
+
+       public:
+       _central();
+       void draw(_modo modo, float r1, float g1, float b1, float r2, float g2, float b2, float grosor, vector<_vertex3i> carasArg, int inicio);
+       void draw(_modo modo, float r1, float g1, float b1, float r2, float g2, float b2, float grosor);
+};
+
+class _mano: public _triangulos3D
+{
+       public:
+       _conoT antebrazo;
+       _esfera puno;
+
+       public:
+       _mano();
+       void draw(_modo modo, float r1, float g1, float b1, float r2, float g2, float b2, float grosor, vector<_vertex3i> carasArg, int inicio);
+       void draw(_modo modo, float r1, float g1, float b1, float r2, float g2, float b2, float grosor);
+};
+
+class _pie: public _triangulos3D
+{
+       public:
+       _esfera art;
+       _semiEsfera jaba;
+       _conoT pant = _conoT(3.0, 1.7, 1.0, 17); // _conoT(float alt = 3.0, float anchInf= 1.0, float anchSup = 1.5, int  num = 17);
+
+       public:
+       _pie();
+       void draw(_modo modo, float r1, float g1, float b1, float r2, float g2, float b2, float grosor, vector<_vertex3i> carasArg, int inicio);
+       void draw(_modo modo, float r1, float g1, float b1, float r2, float g2, float b2, float grosor);
+};
+
+
+class _Pilaf: public _triangulos3D
+{
+       public:
+       _central cabina;
+       _cilindro cilindroBDer,cilindroBIzq,cilindroPDer,cilindroPIzq;
+       _mano manoDer,manoIzq;
+       _pie pieDer,pieIzq;
+
+       public:
+       float rebote;
+       float giroCuerpo;
+       float giroBrazoDerX, giroBrazoDerY, giroBrazoDerZ;
+       float giroBrazoIzqX, giroBrazoIzqY, giroBrazoIzqZ;
+       float giroManoDerZ, giroManoDerY;
+       float giroManoIzqZ, giroManoIzqY;
+       float giroPieDerX, giroPieIzqX;
+       float giroPiernaDerX, giroPiernaIzqX;
+       
+       _Pilaf();
+       void draw(_modo modo, float r1, float g1, float b1, float r2, float g2, float b2, float grosor);
+
+};
+
